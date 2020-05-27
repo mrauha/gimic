@@ -436,6 +436,14 @@ contains
             deallocate(cells)
           else
             write(*,*) 'not writing a vtu file, because the file grid.1.ele was not found.'
+            ! Hack by Markus, 27.5.20.
+            ! I want to calculate \vec{J}(\vec{r}). Coordinates are given in gridfile.grid in au
+            ! Write a list of J's to jvals.txt. Each row has Jx Jy Jz in default fortran format
+            ! Each row corresponds to the same row at gridfile.grid file
+            open (unit=666, file = "jvals.txt")
+            do i=1, p1 
+                write(666,*) jval_unstructured(i,:)
+            end do
           endif
           deallocate(jval_unstructured)
         end if
